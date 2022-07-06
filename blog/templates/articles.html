@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block feature %}
+<div class = "container">
+    <div class = "title">
+      <h2>All Articles</h2>
+    </div>
+    <form method="POST">
+      <input type="text" id="query" name="query" class="textbox" placeholder="Search">
+      <button type = "submit" class="button">
+        <i class='bx bx-search'></i>
+      </button>
+    </form>
+    <div class="article-meta">
+        <a class="back-button" href="{% url 'blog:articles' %}">All Articles</a>
+        {% for tag in tags %}
+        <span class="tag"><a href="#">{{ tag.name }}</a></span>
+        {% endfor %}
+    </div>
+
+    <hr>
+
+    <div class = "featured-content">
+      {% for article in articles %}
+      <!-- item -->
+      <div class = "featured-item">
+        <div class = "featured-img">
+          <a href="{{ article.get_absolute_url }}">
+            <img src = "{{ article.image.url }}" alt = "">
+            <span><i class='bx bx-calendar-star'></i>{{ article.publish|date:"M Y" }}</span>
+            <span>{{ article.sub_headline }}</span>
+          </a>
+        </div>
+        <div class = "featured-title">
+          <a href = "{{ article.get_absolute_url }}">{{ article.headline }}</a>
+        </div>
+      </div>
+      <!-- end of item -->
+      {% empty %}
+        <h3>No Article found...</h3>  
+      {% endfor %}
+    </div>
+</div>
+{% endblock feature %}
